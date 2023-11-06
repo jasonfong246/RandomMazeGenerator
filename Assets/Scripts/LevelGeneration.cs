@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ShareefSoftware.Input;
 using UnityEngine;
 
 namespace ShareefSoftware
@@ -14,14 +15,20 @@ namespace ShareefSoftware
         [SerializeField] private float cellHeight;
         [SerializeField] private Transform parentForNewObjects;
         [SerializeField] int randomSeed = 0;
-
+        [SerializeField] private RotateScene rotateScene;
+        private RotateSceneHandler rotateSceneHandler;
+        private InputActions inputScheme;
         private void Awake()
         {
             System.Random random = CreateRandom();
             var maze = new Maze(numberOfRows, numberOfColumns, random);
             IGridGraph<bool> occupancyGrid = ConvertMazeToOccupancyGraph(maze);
             CreatePrefabs(random, occupancyGrid);
+            inputScheme = new InputActions();
+            var rotateSceneHandler = new RotateSceneHandler(inputScheme.Rotation.RotateScene, this.rotateScene);
         }
+
+        
 
         private void CreatePrefabs(System.Random random, IGridGraph<bool> occupancyGrid)
         {

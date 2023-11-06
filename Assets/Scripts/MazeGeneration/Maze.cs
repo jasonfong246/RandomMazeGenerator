@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ShareefSoftware
 {
@@ -26,11 +27,16 @@ namespace ShareefSoftware
 
         private void CreateMaze(int numberOfRows, int numberOfColumns, System.Random random)
         {
-            var grid = new GridGraphRandomizedNeighborsDecorator<int>(new GridGraph<int>(numberOfRows, numberOfColumns, GraphValueAccessorConstant<int>.DefaultConstant), random);
-            var recursiveBacktracker = new GridTraversal<int>(grid);
+            /*
+             * Replace ??? with your code
+             */
+            // var grid = ???;
+            var grid = new GridGraph<int>(numberOfRows, numberOfColumns, new GridNodeDataStore<int>(numberOfRows, numberOfColumns));
+            var mazeGenerator = new GridTraversal<int>(grid);
 
             mazeGrid = new GridGraph<Direction>(numberOfRows, numberOfColumns, new GridNodeDataStore<Direction>(numberOfRows, numberOfColumns));
-            foreach (var edge in recursiveBacktracker.DepthFirst(startRow, startColumn))
+
+            foreach (var edge in mazeGenerator.GenerateMaze(startRow, startColumn))
             {
                 (Direction forwardDir, Direction backwardDir) = DetermineDirections(edge);
                 CarveEdge(edge.From, forwardDir);
